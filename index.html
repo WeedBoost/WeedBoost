@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeedBoost</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            flex-direction: column;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        img {
+            width: 300px;
+            margin-top: 20px;
+        }
+        .start-button {
+            background: white;
+            color: black;
+            font-size: 20px;
+            padding: 15px 30px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            position: absolute;
+            z-index: 10;
+        }
+        .hidden {
+            display: none;
+        }
+        .discord-link {
+            position: absolute;
+            bottom: 20px;
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="stars"></canvas>
+    <img src="ak47.png" alt="AK-47">
+    <button class="start-button" onclick="startSite()">Kliknij w ekran</button>
+    <a class="discord-link" href="https://discord.gg/VVJs4SEzwQ" target="_blank">Dołącz do Discorda</a>
+    <audio id="music" src="your-music-file.mp3"></audio>
+    <script>
+        function startSite() {
+            document.querySelector('.start-button').classList.add('hidden');
+            document.querySelector('.discord-link').style.display = 'block';
+            document.getElementById('music').play();
+        }
+        
+        const canvas = document.getElementById("stars");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        let stars = [];
+        for (let i = 0; i < 100; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2,
+                speed: Math.random() * 2 + 1
+            });
+        }
+        
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "white";
+            
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fill();
+                star.y += star.speed;
+                if (star.y > canvas.height) {
+                    star.y = 0;
+                    star.x = Math.random() * canvas.width;
+                }
+            });
+            requestAnimationFrame(animateStars);
+        }
+        animateStars();
+    </script>
+</body>
+</html>
