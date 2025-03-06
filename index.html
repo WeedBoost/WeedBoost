@@ -20,6 +20,7 @@
             position: absolute;
             top: 0;
             left: 0;
+            pointer-events: none;
         }
         img {
             width: 300px;
@@ -52,12 +53,12 @@
             border: none;
             background: white;
             border-radius: 10px;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
     <button class="start-button" onclick="startMusic()">Kliknij, aby rozpocząć</button>
-    <canvas id="clouds"></canvas>
     <canvas id="stars"></canvas>
     <img id="ak47" src="ak47.png" alt="AK-47">
     <a class="discord-link" href="https://discord.gg/VVJs4SEzwQ" target="_blank">Dołącz do Discorda</a>
@@ -74,7 +75,6 @@
             
             document.querySelector('.start-button').style.display = 'none';
             document.getElementById("stars").style.display = "block";
-            document.getElementById("clouds").style.display = "block";
             document.getElementById("ak47").style.display = "block";
             document.querySelector('.discord-link').style.display = "block";
             document.querySelector('.tiktok-link').style.display = "block";
@@ -114,43 +114,6 @@
             requestAnimationFrame(animateStars);
         }
         animateStars();
-
-        // Chmury
-        const cloudsCanvas = document.getElementById("clouds");
-        const cloudsCtx = cloudsCanvas.getContext("2d");
-        cloudsCanvas.width = window.innerWidth;
-        cloudsCanvas.height = window.innerHeight;
-
-        let clouds = [];
-        for (let i = 0; i < 5; i++) {
-            clouds.push({
-                x: Math.random() * cloudsCanvas.width,
-                y: Math.random() * cloudsCanvas.height / 2,
-                speed: Math.random() * 0.5 + 0.2
-            });
-        }
-
-        function drawCloud(x, y) {
-            cloudsCtx.fillStyle = "rgba(25, 25, 112, 0.9)"; 
-            cloudsCtx.beginPath();
-            cloudsCtx.ellipse(x, y, 100, 40, 0, 0, Math.PI * 2);
-            cloudsCtx.ellipse(x + 40, y - 20, 80, 35, 0, 0, Math.PI * 2);
-            cloudsCtx.ellipse(x - 40, y - 20, 80, 35, 0, 0, Math.PI * 2);
-            cloudsCtx.fill();
-        }
-
-        function animateClouds() {
-            cloudsCtx.clearRect(0, 0, cloudsCanvas.width, cloudsCanvas.height);
-            clouds.forEach(cloud => {
-                drawCloud(cloud.x, cloud.y);
-                cloud.x += cloud.speed;
-                if (cloud.x > cloudsCanvas.width) {
-                    cloud.x = -100;
-                }
-            });
-            requestAnimationFrame(animateClouds);
-        }
-        animateClouds();
     </script>
 </body>
 </html>
